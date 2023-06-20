@@ -152,3 +152,25 @@ class RecipeManager:
         self.recipes.append(updated_recipe)
         del self.recipes[recipe_index]
         return True
+
+    def delete_recipe(self):
+
+        if len(self.recipes) == 0:
+            raise Exception("Recipe list empty!")
+
+        print("The list of recipes are:")
+        self.view_recipe_list(self.recipes)
+        print("\n")
+        recipe_id = input(
+            "Please enter the recipe id to which you want to delete: ")
+        recipe = None
+        recipe_index = None
+
+        for item in self.recipes:
+            if int(item.id) == int(recipe_id):
+                recipe = item
+                recipe_index = self.recipes.index(recipe)
+        if recipe is None:
+            raise Exception("Recipe doesnt exist")
+        del self.recipes[recipe_index]
+        return True
