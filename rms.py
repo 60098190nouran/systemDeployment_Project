@@ -174,3 +174,27 @@ class RecipeManager:
             raise Exception("Recipe doesnt exist")
         del self.recipes[recipe_index]
         return True
+
+    def export_data(self, file_format='csv'):
+        if file_format == 'csv':
+            with open('new_recipes.csv', 'w', newline='') as f:
+                f.write('id,name,ingredients,instructions,category,rating\n')
+                for recipe in self.recipes:
+                    f.write(str(recipe.id)+","+recipe.name+","+recipe.ingredients+"," +
+                            recipe.instructions+","+recipe.category+","+str(recipe.rating)+"\n")
+        else:
+            raise Exception("Only CSV files are supported")
+
+    def import_data(self, file_path):
+        with open(file_path) as f:
+            if file_path.endswith('.csv'):
+                next(f)
+                for line in f:
+                    line = line.strip("\n")
+                    alist = line.split(",")
+                    new_recipe = Recipe(
+                        alist[0], alist[1], alist[2], alist[3], alist[4], alist[5])
+                    self.recipes.append(new_recipe)
+
+            else:
+                raise Exception("Only CSV files are supported")
